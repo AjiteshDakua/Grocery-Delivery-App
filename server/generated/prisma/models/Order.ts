@@ -29,6 +29,7 @@ export type AggregateOrder = {
 export type OrderAvgAggregateOutputType = {
   subtotal: number | null
   deliveryFee: number | null
+  handlingFee: number | null
   tax: number | null
   total: number | null
 }
@@ -36,6 +37,7 @@ export type OrderAvgAggregateOutputType = {
 export type OrderSumAggregateOutputType = {
   subtotal: number | null
   deliveryFee: number | null
+  handlingFee: number | null
   tax: number | null
   total: number | null
 }
@@ -46,6 +48,7 @@ export type OrderMinAggregateOutputType = {
   paymentMethod: string | null
   subtotal: number | null
   deliveryFee: number | null
+  handlingFee: number | null
   tax: number | null
   total: number | null
   status: string | null
@@ -62,6 +65,7 @@ export type OrderMaxAggregateOutputType = {
   paymentMethod: string | null
   subtotal: number | null
   deliveryFee: number | null
+  handlingFee: number | null
   tax: number | null
   total: number | null
   status: string | null
@@ -80,6 +84,7 @@ export type OrderCountAggregateOutputType = {
   paymentMethod: number
   subtotal: number
   deliveryFee: number
+  handlingFee: number
   tax: number
   total: number
   status: number
@@ -97,6 +102,7 @@ export type OrderCountAggregateOutputType = {
 export type OrderAvgAggregateInputType = {
   subtotal?: true
   deliveryFee?: true
+  handlingFee?: true
   tax?: true
   total?: true
 }
@@ -104,6 +110,7 @@ export type OrderAvgAggregateInputType = {
 export type OrderSumAggregateInputType = {
   subtotal?: true
   deliveryFee?: true
+  handlingFee?: true
   tax?: true
   total?: true
 }
@@ -114,6 +121,7 @@ export type OrderMinAggregateInputType = {
   paymentMethod?: true
   subtotal?: true
   deliveryFee?: true
+  handlingFee?: true
   tax?: true
   total?: true
   status?: true
@@ -130,6 +138,7 @@ export type OrderMaxAggregateInputType = {
   paymentMethod?: true
   subtotal?: true
   deliveryFee?: true
+  handlingFee?: true
   tax?: true
   total?: true
   status?: true
@@ -148,6 +157,7 @@ export type OrderCountAggregateInputType = {
   paymentMethod?: true
   subtotal?: true
   deliveryFee?: true
+  handlingFee?: true
   tax?: true
   total?: true
   status?: true
@@ -254,15 +264,16 @@ export type OrderGroupByOutputType = {
   shippingAddress: runtime.JsonValue
   paymentMethod: string
   subtotal: number
-  deliveryFee: number | null
-  tax: number | null
+  deliveryFee: number
+  handlingFee: number
+  tax: number
   total: number
   status: string
   statusHistory: runtime.JsonValue
   deliveryPartnerId: string | null
   deliveryOtp: string | null
   liveLocation: runtime.JsonValue | null
-  isPaid: boolean | null
+  isPaid: boolean
   createdAt: Date
   updatedAt: Date
   _count: OrderCountAggregateOutputType | null
@@ -297,15 +308,16 @@ export type OrderWhereInput = {
   shippingAddress?: Prisma.JsonFilter<"Order">
   paymentMethod?: Prisma.StringFilter<"Order"> | string
   subtotal?: Prisma.FloatFilter<"Order"> | number
-  deliveryFee?: Prisma.FloatNullableFilter<"Order"> | number | null
-  tax?: Prisma.FloatNullableFilter<"Order"> | number | null
+  deliveryFee?: Prisma.FloatFilter<"Order"> | number
+  handlingFee?: Prisma.FloatFilter<"Order"> | number
+  tax?: Prisma.FloatFilter<"Order"> | number
   total?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.StringFilter<"Order"> | string
   statusHistory?: Prisma.JsonFilter<"Order">
   deliveryPartnerId?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryOtp?: Prisma.StringNullableFilter<"Order"> | string | null
   liveLocation?: Prisma.JsonNullableFilter<"Order">
-  isPaid?: Prisma.BoolNullableFilter<"Order"> | boolean | null
+  isPaid?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -319,15 +331,16 @@ export type OrderOrderByWithRelationInput = {
   shippingAddress?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  deliveryFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  tax?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
+  tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusHistory?: Prisma.SortOrder
   deliveryPartnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryOtp?: Prisma.SortOrderInput | Prisma.SortOrder
   liveLocation?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPaid?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPaid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -344,15 +357,16 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   shippingAddress?: Prisma.JsonFilter<"Order">
   paymentMethod?: Prisma.StringFilter<"Order"> | string
   subtotal?: Prisma.FloatFilter<"Order"> | number
-  deliveryFee?: Prisma.FloatNullableFilter<"Order"> | number | null
-  tax?: Prisma.FloatNullableFilter<"Order"> | number | null
+  deliveryFee?: Prisma.FloatFilter<"Order"> | number
+  handlingFee?: Prisma.FloatFilter<"Order"> | number
+  tax?: Prisma.FloatFilter<"Order"> | number
   total?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.StringFilter<"Order"> | string
   statusHistory?: Prisma.JsonFilter<"Order">
   deliveryPartnerId?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryOtp?: Prisma.StringNullableFilter<"Order"> | string | null
   liveLocation?: Prisma.JsonNullableFilter<"Order">
-  isPaid?: Prisma.BoolNullableFilter<"Order"> | boolean | null
+  isPaid?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -366,15 +380,16 @@ export type OrderOrderByWithAggregationInput = {
   shippingAddress?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  deliveryFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  tax?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
+  tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusHistory?: Prisma.SortOrder
   deliveryPartnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryOtp?: Prisma.SortOrderInput | Prisma.SortOrder
   liveLocation?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPaid?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPaid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
@@ -394,15 +409,16 @@ export type OrderScalarWhereWithAggregatesInput = {
   shippingAddress?: Prisma.JsonWithAggregatesFilter<"Order">
   paymentMethod?: Prisma.StringWithAggregatesFilter<"Order"> | string
   subtotal?: Prisma.FloatWithAggregatesFilter<"Order"> | number
-  deliveryFee?: Prisma.FloatNullableWithAggregatesFilter<"Order"> | number | null
-  tax?: Prisma.FloatNullableWithAggregatesFilter<"Order"> | number | null
+  deliveryFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  handlingFee?: Prisma.FloatWithAggregatesFilter<"Order"> | number
+  tax?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   total?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   status?: Prisma.StringWithAggregatesFilter<"Order"> | string
   statusHistory?: Prisma.JsonWithAggregatesFilter<"Order">
   deliveryPartnerId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   deliveryOtp?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   liveLocation?: Prisma.JsonNullableWithAggregatesFilter<"Order">
-  isPaid?: Prisma.BoolNullableWithAggregatesFilter<"Order"> | boolean | null
+  isPaid?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
 }
@@ -413,14 +429,15 @@ export type OrderCreateInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
@@ -434,15 +451,16 @@ export type OrderUncheckedCreateInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: string | null
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -453,14 +471,15 @@ export type OrderUpdateInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -474,15 +493,16 @@ export type OrderUncheckedUpdateInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -494,15 +514,16 @@ export type OrderCreateManyInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: string | null
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -513,14 +534,15 @@ export type OrderUpdateManyMutationInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -532,15 +554,16 @@ export type OrderUncheckedUpdateManyInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -563,6 +586,7 @@ export type OrderCountOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -578,6 +602,7 @@ export type OrderCountOrderByAggregateInput = {
 export type OrderAvgOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
 }
@@ -588,6 +613,7 @@ export type OrderMaxOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -604,6 +630,7 @@ export type OrderMinOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -617,6 +644,7 @@ export type OrderMinOrderByAggregateInput = {
 export type OrderSumOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
+  handlingFee?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
 }
@@ -711,14 +739,15 @@ export type OrderCreateWithoutUserInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   deliveryPartner?: Prisma.DeliveryPartnerCreateNestedOneWithoutOrdersInput
@@ -730,15 +759,16 @@ export type OrderUncheckedCreateWithoutUserInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: string | null
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -779,15 +809,16 @@ export type OrderScalarWhereInput = {
   shippingAddress?: Prisma.JsonFilter<"Order">
   paymentMethod?: Prisma.StringFilter<"Order"> | string
   subtotal?: Prisma.FloatFilter<"Order"> | number
-  deliveryFee?: Prisma.FloatNullableFilter<"Order"> | number | null
-  tax?: Prisma.FloatNullableFilter<"Order"> | number | null
+  deliveryFee?: Prisma.FloatFilter<"Order"> | number
+  handlingFee?: Prisma.FloatFilter<"Order"> | number
+  tax?: Prisma.FloatFilter<"Order"> | number
   total?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.StringFilter<"Order"> | string
   statusHistory?: Prisma.JsonFilter<"Order">
   deliveryPartnerId?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryOtp?: Prisma.StringNullableFilter<"Order"> | string | null
   liveLocation?: Prisma.JsonNullableFilter<"Order">
-  isPaid?: Prisma.BoolNullableFilter<"Order"> | boolean | null
+  isPaid?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
 }
@@ -798,14 +829,15 @@ export type OrderCreateWithoutDeliveryPartnerInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
@@ -818,14 +850,15 @@ export type OrderUncheckedCreateWithoutDeliveryPartnerInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -862,15 +895,16 @@ export type OrderCreateManyUserInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: string | null
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -881,14 +915,15 @@ export type OrderUpdateWithoutUserInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deliveryPartner?: Prisma.DeliveryPartnerUpdateOneWithoutOrdersNestedInput
@@ -900,15 +935,16 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -919,15 +955,16 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -939,14 +976,15 @@ export type OrderCreateManyDeliveryPartnerInput = {
   shippingAddress: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string
   subtotal: number
-  deliveryFee?: number | null
-  tax?: number | null
+  deliveryFee?: number
+  handlingFee?: number
+  tax?: number
   total: number
   status?: string
   statusHistory: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: boolean | null
+  isPaid?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -957,14 +995,15 @@ export type OrderUpdateWithoutDeliveryPartnerInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -977,14 +1016,15 @@ export type OrderUncheckedUpdateWithoutDeliveryPartnerInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -996,14 +1036,15 @@ export type OrderUncheckedUpdateManyWithoutDeliveryPartnerInput = {
   shippingAddress?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
-  deliveryFee?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  tax?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  handlingFee?: Prisma.FloatFieldUpdateOperationsInput | number
+  tax?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusHistory?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   deliveryOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   liveLocation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isPaid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPaid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1018,6 +1059,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   paymentMethod?: boolean
   subtotal?: boolean
   deliveryFee?: boolean
+  handlingFee?: boolean
   tax?: boolean
   total?: boolean
   status?: boolean
@@ -1040,6 +1082,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   paymentMethod?: boolean
   subtotal?: boolean
   deliveryFee?: boolean
+  handlingFee?: boolean
   tax?: boolean
   total?: boolean
   status?: boolean
@@ -1062,6 +1105,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   paymentMethod?: boolean
   subtotal?: boolean
   deliveryFee?: boolean
+  handlingFee?: boolean
   tax?: boolean
   total?: boolean
   status?: boolean
@@ -1084,6 +1128,7 @@ export type OrderSelectScalar = {
   paymentMethod?: boolean
   subtotal?: boolean
   deliveryFee?: boolean
+  handlingFee?: boolean
   tax?: boolean
   total?: boolean
   status?: boolean
@@ -1096,7 +1141,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "items" | "shippingAddress" | "paymentMethod" | "subtotal" | "deliveryFee" | "tax" | "total" | "status" | "statusHistory" | "deliveryPartnerId" | "deliveryOtp" | "liveLocation" | "isPaid" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "items" | "shippingAddress" | "paymentMethod" | "subtotal" | "deliveryFee" | "handlingFee" | "tax" | "total" | "status" | "statusHistory" | "deliveryPartnerId" | "deliveryOtp" | "liveLocation" | "isPaid" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deliveryPartner?: boolean | Prisma.Order$deliveryPartnerArgs<ExtArgs>
@@ -1123,15 +1168,16 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     shippingAddress: runtime.JsonValue
     paymentMethod: string
     subtotal: number
-    deliveryFee: number | null
-    tax: number | null
+    deliveryFee: number
+    handlingFee: number
+    tax: number
     total: number
     status: string
     statusHistory: runtime.JsonValue
     deliveryPartnerId: string | null
     deliveryOtp: string | null
     liveLocation: runtime.JsonValue | null
-    isPaid: boolean | null
+    isPaid: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["order"]>
@@ -1566,6 +1612,7 @@ export interface OrderFieldRefs {
   readonly paymentMethod: Prisma.FieldRef<"Order", 'String'>
   readonly subtotal: Prisma.FieldRef<"Order", 'Float'>
   readonly deliveryFee: Prisma.FieldRef<"Order", 'Float'>
+  readonly handlingFee: Prisma.FieldRef<"Order", 'Float'>
   readonly tax: Prisma.FieldRef<"Order", 'Float'>
   readonly total: Prisma.FieldRef<"Order", 'Float'>
   readonly status: Prisma.FieldRef<"Order", 'String'>

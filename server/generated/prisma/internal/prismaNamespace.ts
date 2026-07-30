@@ -890,6 +890,7 @@ export const OrderScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   subtotal: 'subtotal',
   deliveryFee: 'deliveryFee',
+  handlingFee: 'handlingFee',
   tax: 'tax',
   total: 'total',
   status: 'status',
