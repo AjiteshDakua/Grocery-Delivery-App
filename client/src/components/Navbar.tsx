@@ -15,12 +15,11 @@ import {
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  const user: any = { name: "Aji", email: "Ajitesh@gmailcom", isAdmin: true };
-
+  const { user, logout } = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
-
   const [searchQuery, setSearchQuery] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -34,6 +33,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    logout();
     setUserMenuOpen(false);
     navigate("/");
   };
@@ -148,7 +148,7 @@ const Navbar = () => {
                 ) : (
                   <div className="flex-center gap-2">
                     <Link
-                      to="/"
+                      to="/login"
                       className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-950 rounded-full hover:bg-green-900-light transition-colors "
                     >
                       <UserIcon size={16} />

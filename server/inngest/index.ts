@@ -3,39 +3,45 @@ import { prisma } from "../config/prisma.js";
 import sendEmail from "../config/nodemailer.js";
 import { timeStamp } from "node:console";
 
-const LOW_STOCK_THRESHOLD = 10
+const LOW_STOCK_THRESHOLD = 10;
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "grocery-delivery-app-aji" });
 
-
 // Low Stock Alert to admin:
 const CheckLowStock = inngest.createFunction(
-    {
-        id: "check-low-stock",
-        name: "Low Stock Alert",
-        triggers: [{ event: "inventory/stock.updated" }]
-    },
-    async ({ event, step }) => {
-        const { productId } = event.data;
+  {
+    id: "check-low-stock",
+    name: "Low Stock Alert",
+    triggers: [{ event: "inventory/stock.updated" }],
+  },
+  async ({ event, step }) => {
+    const { productId } = event.data;
 
-        const product = await step.run('fetch-product', async () => {
-            return await prisma.product.findUnique({ where: { id: productId } })
-        })
+    const product = await step.run("fetch-product", async () => {
+      return await prisma.product.findUnique({ where: { id: productId } });
+    });
 
-        if (!product || product.stock === null || product.stock >= LOW_STOCK_THRESHOLD) {
-            return { skipped: true, stock: product?.stock }
-        }
+    if (
+      !product ||
+      product.stock === null ||
+      product.stock >= LOW_STOCK_THRESHOLD
+    ) {
+      return { skipped: true, stock: product?.stock };
+    }
 
-        await step.run("send-low-stock-email", async () => {
-            const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim()) : []
+    await step.run("send-low-stock-email", async () => {
+      const adminEmails = process.env.ADMIN_EMAILS
+        ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim())
+        : [];
 
-            if (adminEmails.length === 0) return { skipped: true, reason: "No admin emails" }
+      if (adminEmails.length === 0)
+        return { skipped: true, reason: "No admin emails" };
 
-            await sendEmail({
-                to: adminEmails.join(","),
-                subject: `Low Stock Alert: ${product.name}`,
-                body: `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 520px; margin: auto; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;">
+      await sendEmail({
+        to: adminEmails.join(","),
+        subject: `Low Stock Alert: ${product.name}`,
+        body: `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 520px; margin: auto; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;">
                         <div style="background: linear-gradient(135deg, #dc2626, #ef4444); padding: 24px 28px;">
                             <h2 style="color: #fff; margin: 0; font-size: 20px;">Low Stock Alert</h2>
                         </div>
@@ -54,49 +60,52 @@ const CheckLowStock = inngest.createFunction(
                             </div>
                             <p style="margin: 20px 0 0; font-size: 13px; color: #9ca3af; text-align: center;">Please restock this item as soon as possible.</p>
                         </div>
-                    </div>`
-
-            })
-        })
-        return { alerted: true, product: product.name, stock: product.stock }
-    },
+                    </div>`,
+      });
+    });
+    return { alerted: true, product: product.name, stock: product.stock };
+  },
 );
 
 // Monthly Offers Email (1st of every month - payday)
-const sendMonthlyOffers = inngest.createFunction({
+const sendMonthlyOffers = inngest.createFunction(
+  {
     id: "send-monthly-offers",
     name: "Monthly Payday Offers",
-    triggers: [cron("0 10 1 * *")]
-}, async ({ step }) => {
-    const { deals, users } = await step.run
-        ("fetch-deals-and-users", async () => {
-            // get top discounted products as featured deals
-            const products = await prisma.product.findMany({
-                where: { stock: { gt: 0 } },
-                orderBy: { originalPrice: 'desc' },
-                take: 6,
-            })
-            const allUsers = await prisma.user.findMany({ select: { name: true, email: true } })
-            return { deals: products, users: allUsers }
-        })
+    triggers: [cron("0 10 1 * *")],
+  },
+  async ({ step }) => {
+    const { deals, users } = await step.run(
+      "fetch-deals-and-users",
+      async () => {
+        // get top discounted products as featured deals
+        const products = await prisma.product.findMany({
+          where: { stock: { gt: 0 } },
+          orderBy: { originalPrice: "desc" },
+          take: 6,
+        });
+        const allUsers = await prisma.user.findMany({
+          select: { name: true, email: true },
+        });
+        return { deals: products, users: allUsers };
+      },
+    );
     if (users.length === 0 || deals.length === 0) {
-        return { skipped: true, reason: "No users or deals" };
-
+      return { skipped: true, reason: "No users or deals" };
     }
     let sentCount = 0;
 
-    // Send in batches of 10 to avoid overwhelming mail server 
+    // Send in batches of 10 to avoid overwhelming mail server
     const batcheSize = 10;
     for (let i = 0; i < users.length; i += batcheSize) {
-        const batch = users.slice(i, i + batcheSize);
+      const batch = users.slice(i, i + batcheSize);
 
-
-        await step.run(`send-offers-batch-${i}`, async () => {
-            for (const u of batch) {
-                await sendEmail({
-                    to: u.email,
-                    subject: `Fresh Picks Just For You`,
-                    body: `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 520px; margin: auto; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;">
+      await step.run(`send-offers-batch-${i}`, async () => {
+        for (const u of batch) {
+          await sendEmail({
+            to: u.email,
+            subject: `Fresh Picks Just For You`,
+            body: `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 520px; margin: auto; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;">
                 
                 <div style="background: linear-gradient(135deg, #f97316, #fb923c); padding: 24px 28px;">
                     <h2 style="color: #fff; margin: 0; font-size: 20px;">Fresh Picks Just For You!</h2>
@@ -112,18 +121,18 @@ const sendMonthlyOffers = inngest.createFunction({
 
                     <table width="100%" cellpadding="0" cellspacing="0">
                         ${deals
-                            .reduce((rows: any, _, i: number) => {
-                                if (i % 3 === 0) {
-                                    rows.push(deals.slice(i, i + 3));
-                                }
-                                return rows;
-                            }, [])
-                            .map(
-                                (row: any) => `
+                          .reduce((rows: any, _, i: number) => {
+                            if (i % 3 === 0) {
+                              rows.push(deals.slice(i, i + 3));
+                            }
+                            return rows;
+                          }, [])
+                          .map(
+                            (row: any) => `
                                 <tr>
                                     ${row
-                                        .map(
-                                            (p: any) => `
+                                      .map(
+                                        (p: any) => `
                                             <td style="width: 33%; padding: 8px; vertical-align: top;">
                                                 <div style="border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; text-align: center;">
                                                     ${p.image ? `<img src="${p.image}" alt="${p.name}" style="width: 100%; height: 100px; object-fit: cover;" />` : ""}
@@ -137,12 +146,12 @@ const sendMonthlyOffers = inngest.createFunction({
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </td>`
-                                        )
-                                        .join("")}
-                                </tr>`
-                            )
-                            .join("")}
+                                            </td>`,
+                                      )
+                                      .join("")}
+                                </tr>`,
+                          )
+                          .join("")}
                     </table>
 
                     <div style="text-align: center; margin-top: 24px;">
@@ -152,89 +161,91 @@ const sendMonthlyOffers = inngest.createFunction({
                         </a>
                     </div>
                 </div>
-            </div>`
-                })
-            }
-        })
+            </div>`,
+          });
+        }
+      });
 
-        sentCount += batch.length
-
+      sentCount += batch.length;
     }
-    return { sent: sentCount }
-})
+    return { sent: sentCount };
+  },
+);
 
-// Auto-Assing Rider after 5 Minutes
-const autoAssingRider = inngest.createFunction({
-    id: 'auto-assing-rider',
-    name: "Auto Assing Delivery Rider",
-    triggers: [{ event: "order/placed" }]
-
-}, async ({ event, step }) => {
+// Auto-assign Rider after 5 Minutes
+const autoAssignRider = inngest.createFunction(
+  {
+    id: "auto-assign-rider",
+    name: "Auto Assign Delivery Rider",
+    triggers: [{ event: "order/placed" }],
+  },
+  async ({ event, step }) => {
     const { orderId } = event.data;
 
+    // wait 5 minutes befor attempting assignment
+    await step.sleep("wait-5-min", "5m");
 
-    // wait 5 minutes befor attempting assingment
-    await step.sleep('wait-5-min', "5m");
+    const result = await step.run("assign-rider", async () => {
+      const order = await prisma.order.findUnique({ where: { id: orderId } });
 
-    const result = await step.run("assing-rider", async () => {
-        const order = await prisma.order.findUnique({ where: { id: orderId } })
+      // skip if order dose't exist, already assigned, or cancelied
+      if (!order) return { skipped: true, reason: "order not found" };
+      if (order.deliveryPartnerId)
+        return { skipped: true, reason: "Already assigned" };
+      if (["Cancelled", "Delivered"].includes(order.status as string))
+        return { skipped: true, reason: `Order is ${order.status}` };
 
-        // skip if order dose't exist, already assinged, or cancelied
-        if (!order) return { skipped: true, reason: "order not found" }
-        if (order.deliveryPartnerId) return { skipped: true, reason: "Already assigned" }
-        if (["Cancelled", "Delivered"].includes(order.status as string)) return { skipped: true, reason: `Order is ${order.status}` }
+      // Find an active rider not currently delivering
+      const busyOrders = await prisma.order.findMany({
+        where: {
+          status: { in: ["Assigneed", "Packed", "Out for Delivery"] },
+          deliveryPartnerId: { not: null },
+        },
+        select: { deliveryPartnerId: true },
+      });
+      const busyRiderIds = busyOrders.map((o) => o.deliveryPartnerId);
 
-        // Find an active rider not currently delivering
-        const busyOrders = await prisma.order.findMany({
-            where: {
-                status: { in: ["Assingneed", "Packed", "Out for Delivery"] },
-                deliveryPartnerId: { not: null }
-            },
-            select: { deliveryPartnerId: true }
-        })
-        const busyRiderIds = busyOrders.map((o) => o.deliveryPartnerId)
+      const availableRider = await prisma.deliveryPartner.findFirst({
+        where: {
+          isActive: true,
+          id: { notIn: busyRiderIds as string[] },
+        },
+      });
 
-        const availableRider = await prisma.deliveryPartner.findFirst({
-            where: {
-                isActive: true,
-                id: { notIn: busyRiderIds as string[] }
-            }
-        })
+      if (!availableRider)
+        return { skipped: true, reason: "No riders available" };
 
-        if (!availableRider) return { skipped: true, reason: "No riders available" }
+      // Generate 6-digit otp
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
+      const history = (
+        Array.isArray(order.statusHistory) ? order.statusHistory : []
+      ) as any[];
+      history.push({
+        status: "Assigned",
+        note: `Auto-assigned to ${availableRider.name}`,
+        timeStamp: new Date(),
+      });
+      await prisma.order.update({
+        where: { id: orderId },
+        data: {
+          deliveryPartnerId: availableRider.id,
+          deliveryOtp: otp,
+          status: "Assigned",
+          statusHistory: history,
+        },
+      });
 
-        // Generate 6-digit otp
-        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+      return {
+        assigned: true,
+        riderId: availableRider.id,
+        riderName: availableRider.name,
+        orderId: orderId,
+      };
+    });
 
-        const history = (Array.isArray(order.statusHistory) ? order.statusHistory : []) as any[]
-        history.push({
-            status: "Assigned",
-            note: `Auto-assigned to ${availableRider.name}`, timeStamp: new Date(),
-        })
-        await prisma.order.update({
-            where: { id: orderId },
-            data: {
-                deliveryPartnerId: availableRider.id,
-                deliveryOtp: otp,
-                status: "Assigned",
-                statusHistory: history,
-            }
-        })
+    return result;
+  },
+);
 
-        return {
-            assigned: true,
-            riderId: availableRider.id,
-            riderName: availableRider.name,
-            orderId: orderId,
-        }
-
-
-    })
-
-    return result
-})
-
-
-
-export const functions = [CheckLowStock, sendMonthlyOffers, autoAssingRider];
+export const functions = [CheckLowStock, sendMonthlyOffers, autoAssignRider];

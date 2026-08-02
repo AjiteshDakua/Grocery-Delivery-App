@@ -3,7 +3,7 @@ import { prisma } from "../config/prisma.js";
 import bcrypt from "bcrypt";
 
 // get admin dashbord data
-export const getAdminStates = async (req: Request, res: Response) => {
+export const getAdminStats = async (req: Request, res: Response) => {
   const [
     totalOrders,
     totalUsers,
@@ -76,7 +76,7 @@ export const updateDeliveryPartners = async (req: Request, res: Response) => {
   if (name) data.name = name;
   if (phone) data.phone = phone;
   if (vehicleType) data.vehicleType = vehicleType;
-  if (isActive) data.isActive = isActive;
+  data.isActive = isActive;
 
   try {
     const partner = await prisma.deliveryPartner.update({
@@ -89,8 +89,8 @@ export const updateDeliveryPartners = async (req: Request, res: Response) => {
   }
 };
 
-// assing delivery partner
-export const assingDeliveryPartners = async (req: Request, res: Response) => {
+// assign delivery partner
+export const assignDeliveryPartner = async (req: Request, res: Response) => {
   const { partnerId } = req.body;
 
   const order = await prisma.order.findUnique({
@@ -109,7 +109,7 @@ export const assingDeliveryPartners = async (req: Request, res: Response) => {
     ? order!.statusHistory
     : [];
 
-  if (order!.status === "placed" || order!.status === "Confirmed") {
+  if (order!.status === "Placed" || order!.status === "Confirmed") {
     status = "Assigned";
     history.push({
       status: "Assigned",

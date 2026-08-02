@@ -46,7 +46,7 @@ export const loginPartner = async (req: Request, res: Response) => {
   res.json({ partner: partnerData, token });
 };
 
-//  get assing deliveries
+//  get assign deliveries
 //get/api/delivery/my-deliveries
 export const getMyDeliveries = async (req: Request, res: Response) => {
   const { status } = req.query;
@@ -54,7 +54,7 @@ export const getMyDeliveries = async (req: Request, res: Response) => {
   const where: any = { deliveryPartnerId: req.partner!.id };
 
   if (status === "active") {
-    where.status = { in: ["Assing", "Packed", "Out for Delivery"] };
+    where.status = { in: ["Assign", "Packed", "Out for Delivery"] };
   } else if (status === "completed") {
     where.status = { in: ["Delivered", "Cancelled"] };
   }
@@ -142,7 +142,7 @@ export const cancelDelivery = async (req: Request, res: Response) => {
 // put/api/delivery/my-deliveryies/:id/status
 export const updateDeliveryStatus = async (req: Request, res: Response) => {
   const { status } = req.body;
-  const allowedStatuses = ["Packed", "out for Delivery"];
+  const allowedStatuses = ["Packed", "Out for Delivery"];
 
   if (!allowedStatuses.includes(status)) {
     return res.status(400).json({ message: "cannot cancel a delivered order" });
@@ -175,7 +175,7 @@ export const updateLocation = async (req: Request, res: Response) => {
     where: {
       id: req.params.id as string,
       deliveryPartnerId: req.partner!.id,
-      status: { in: ["Assigned", "Packed", "out for Delivery"] },
+      status: { in: ["Assigned", "Packed", "Out for Delivery"] },
     },
   });
 
