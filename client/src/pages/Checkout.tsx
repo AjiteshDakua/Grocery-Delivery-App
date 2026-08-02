@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import type { Address } from "../types";
@@ -82,7 +82,7 @@ const Checkout = () => {
   };
 
   // populate address from user's defult address
-  useState(() => {
+  useEffect(() => {
     if (user?.addresses?.length) {
       const defaultAddr =
         user.addresses.find((a) => a.isDefault) || user.addresses[0];
@@ -98,7 +98,7 @@ const Checkout = () => {
         lng: defaultAddr?.lng,
       });
     }
-  });
+  }, [user]);
 
   if (items.length === 0) {
     return (
