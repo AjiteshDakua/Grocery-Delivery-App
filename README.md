@@ -56,9 +56,9 @@ Explore the key interfaces of the Grocery Delivery App.
 |----------|-----------------|
 | <img src="client/src/assets/home_page_demo.png" alt="Homepage" width="100%"> | <img src="client/src/assets/admin_dashboard.png" alt="Admin Dashboard" width="100%"> |
 
-| Delivery Partner Portal | Customer Shopping |
-|-------------------------|-------------------|
-| <img src="client/src/assets/delivery_partner_portal.png" alt="Delivery Partner Portal" width="100%"> | _Coming Soon_ |
+| Delivery Partner Portal |
+|-------------------------|
+|<img src="client/src/assets/Delivery_partner_Portal.png" alt="Delivery Partner Portal" width="100%"> |
 
 ### Homepage
 The landing page showcases featured products, categories, navigation, and promotional banners for customers.
