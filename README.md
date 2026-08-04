@@ -53,9 +53,13 @@ The frontend calls the backend through `VITE_BASE_URL`. The backend reads and wr
 
 Explore the key interfaces of the Grocery Delivery App.
 
-| Homepage | Admin Dashboard |
-|----------|-----------------|
-| <img src="client/src/assets/home_page_demo.png" alt="Homepage" width="100%"> | <img src="client/src/assets/admin_dashboard.png" alt="Admin Dashboard" width="100%"> |
+| Homepage |
+|----------|
+| <img src="client/src/assets/home_page_demo.png" alt="Homepage" width="100%"> |
+
+|Admin Dashboard |
+|----------------|
+| <img src="client/src/assets/admin_dashboard.png" alt="Admin Dashboard" width="100%"> |
 
 | Delivery Partner Portal |
 |-------------------------|
