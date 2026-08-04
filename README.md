@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Grocery Delivery App
-=======
 <h1 align="center">🛒 Grocery Delivery App</h1>
 
 <p align="center">
@@ -16,7 +13,6 @@ A Full-Stack Grocery Delivery Platform built with React, Express, Prisma and Pos
     <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge">
   </a>
 </p>
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 **Version:** 1.0.0  
 **Author:** Ajitesh Dakua
@@ -52,153 +48,7 @@ flowchart LR
 
 The frontend calls the backend through `VITE_BASE_URL`. The backend reads and writes data through Prisma, then connects to third-party services for media uploads, payments, email notifications, and background tasks.
 
-<<<<<<< HEAD
-## Screenshots
 
-### Homepage Hero
-
-![Homepage hero](client/src/assets/hero_bg.jpeg)
-
-The screenshot above shows the landing page hero section with the app branding, navigation, and primary call to action.
-
-### Client
-
-The client app is located in `client/` and uses:
-
-- React 19
-- TypeScript
-- Vite
-- React Router
-- Tailwind CSS 4
-- Leaflet / React Leaflet for map views
-- Axios for API calls
-- React Hot Toast for notifications
-- Lucide React icons
-
-### Server
-
-The server app is located in `server/` and uses:
-
-- Express 5
-- Prisma ORM
-- PostgreSQL-compatible database connection via `DATABASE_URL`
-- JWT authentication
-- Cloudinary for image uploads
-- Nodemailer for email notifications
-- Stripe for payments and webhook handling
-- Inngest for background/event-driven workflows
-
-## API Endpoints
-
-### Auth
-
-- `POST /api/auth/register` - register a user
-- `POST /api/auth/login` - log in a user
-
-### Products
-
-- `GET /api/products` - list products
-- `GET /api/products/:id` - get one product
-- `GET /api/products/flash-deals` - get flash deal products
-- `POST /api/products` - create a product, admin only
-- `PUT /api/products/:id` - update a product, admin only
-- `DELETE /api/products/:id` - delete a product, admin only
-
-### Addresses
-
-- `GET /api/addresses` - list saved addresses
-- `POST /api/addresses` - add an address
-- `PUT /api/addresses/:id` - update an address
-- `DELETE /api/addresses/:id` - delete an address
-
-### Orders
-
-- `POST /api/orders` - create an order
-- `GET /api/orders` - get the signed-in user's orders
-- `GET /api/orders/:id` - get order details
-- `GET /api/orders/:id/location` - get live order location
-- `GET /api/orders/all` - get all orders, admin only
-- `PUT /api/orders/:id/status` - update order status, admin only
-
-### Admin
-
-- `GET /api/admin/stats` - dashboard statistics
-- `GET /api/admin/delivery-partners` - list delivery partners
-- `POST /api/admin/delivery-partners` - create a delivery partner
-- `PUT /api/admin/delivery-partners/:id` - update a delivery partner
-- `PUT /api/admin/order/:id/assign` - assign a delivery partner to an order
-
-### Delivery Partner
-
-- `POST /api/delivery/login` - delivery partner login
-- `GET /api/delivery/my-deliveries` - list assigned deliveries
-- `GET /api/delivery/my-deliveries/:id` - get delivery details
-- `PUT /api/delivery/my-deliveries/:id/complete` - mark delivery complete
-- `PUT /api/delivery/my-deliveries/:id/cancel` - cancel delivery
-- `PUT /api/delivery/my-deliveries/:id/status` - update delivery status
-- `PUT /api/delivery/my-deliveries/:id/location` - update live location
-
-### Upload and Webhooks
-
-- `POST /api/upload` - upload images to Cloudinary
-- `POST /api/stripe` - Stripe webhook handler
-
-### Inngest
-
-- `POST /api/inngest` - event processing and background workflows
-
-## User Roles
-
-- Customer - browse products, manage addresses, place orders, and track deliveries
-- Admin - manage products, orders, delivery partners, and dashboard stats
-- Delivery Partner - view assigned deliveries, update delivery progress, and share live location
-
-## Project Features by Module
-
-### Authentication Module
-
-- User register and login
-- Role-based access control
-- Protected frontend and backend routes
-
-### Catalog Module
-
-- Product listing and product detail pages
-- Flash deals section
-- Search and browse experience
-
-### Cart and Checkout Module
-
-- Add and remove cart items
-- Checkout review and payment flow
-- Address selection and shipping summary
-
-### Orders and Tracking Module
-
-- Order creation and history
-- Live location tracking
-- OTP and delivery progress flow
-
-### Admin Module
-
-- Admin dashboard and analytics
-- Product management
-- Order management and assignment
-- Delivery partner management
-
-### Delivery Module
-
-- Delivery partner login
-- Assigned delivery list
-- Status updates, completion, and cancellation
-
-### Integrations Module
-
-- Cloudinary image upload
-- Stripe payment and webhook handling
-- Nodemailer email delivery
-- Inngest background processing
-=======
 ## 📸 Screenshots
 
 Explore the key interfaces of the Grocery Delivery App.
@@ -257,8 +107,6 @@ The backend application is located in `server/` and is built with:
 
 The backend exposes RESTful APIs for authentication, product management, order processing, delivery tracking, and administrative operations.
 
----
-
 <details>
 <summary><strong>🔐 Authentication</strong></summary>
 
@@ -268,8 +116,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 | `POST` | `/api/auth/login` | Authenticate a user |
 
 </details>
-
----
 
 <details>
 <summary><strong>🛍️ Products</strong></summary>
@@ -285,8 +131,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
-
 <details>
 <summary><strong>📍 Addresses</strong></summary>
 
@@ -299,7 +143,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
 
 <details>
 <summary><strong>📦 Orders</strong></summary>
@@ -315,8 +158,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
-
 <details>
 <summary><strong>👨‍💼 Admin</strong></summary>
 
@@ -330,7 +171,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
 
 <details>
 <summary><strong>🚚 Delivery Partner</strong></summary>
@@ -347,7 +187,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
 
 <details>
 <summary><strong>☁️ Upload & Webhooks</strong></summary>
@@ -359,7 +198,6 @@ The backend exposes RESTful APIs for authentication, product management, order p
 
 </details>
 
----
 
 <details>
 <summary><strong>⚡ Inngest</strong></summary>
@@ -476,19 +314,6 @@ The application is organized into multiple functional modules.
 - Prisma ORM & PostgreSQL Database
 
 </details>
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
-
-## Main Features
-
-- User authentication and protected routes
-- Product browsing and search
-- Cart management
-- Checkout and payment flow
-- Address CRUD and delivery selection
-- Order history and live order tracking
-- Delivery partner dashboard and OTP flow
-- Admin dashboard for products, orders, and delivery partners
-- Image upload and cloud storage support
 
 ## Important Files and Folders
 
@@ -522,18 +347,10 @@ The application is organized into multiple functional modules.
 - Cloudinary account credentials
 - SMTP credentials for transactional email
 
-<<<<<<< HEAD
-## Environment Variables
-
-### Client environment
-
-Create a `.env` file inside `client/` and define:
-=======
 # 🔐 Environment Variables
 
 Before running the project, create the required environment files for both the frontend and backend.
 
----
 
 ## 🖥️ Client Environment (`client/.env`)
 
@@ -545,36 +362,11 @@ Create a `.env` file inside the `client/` directory and configure the following 
 | `VITE_CURRENCY_SYMBOL` | Currency symbol displayed in the UI | `₹` |
 
 ### Example
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 ```env
 VITE_BASE_URL=http://localhost:3000/api
 VITE_CURRENCY_SYMBOL=₹
 ```
-
-<<<<<<< HEAD
-### Server environment
-
-Create a `.env` file inside `server/` and define:
-
-```env
-DATABASE_URL=
-JWT_SECRET=
-CLIENT_URL=http://localhost:5173
-ADMIN_EMAILS=
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-SMTP_USER=
-SMTP_PASS=
-SENDER_EMAIL=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-PORT=3000
-```
-
-=======
----
 
 ## ⚙️ Server Environment (`server/.env`)
 
@@ -622,7 +414,6 @@ PORT=3000
 > - Keep all API keys, secrets, and credentials private.
 > - Add `.env` to your `.gitignore` file before pushing the project to GitHub.
 
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 ## Install Dependencies
 
 Install dependencies separately for both apps.
@@ -643,13 +434,7 @@ npm install
 
 > The server `postinstall` script runs `prisma generate` automatically.
 
-<<<<<<< HEAD
-## Quick Run Process
 
-Open two terminals.
-
-### Terminal 1 - Start the backend
-=======
 # 🚀 Getting Started
 
 Follow the steps below to run the project locally.
@@ -659,46 +444,27 @@ Follow the steps below to run the project locally.
 ## 1️⃣ Start the Backend Server
 
 Open a terminal and navigate to the `server` directory.
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 ```bash
 cd server
 npm run server
 ```
 
-<<<<<<< HEAD
-You can also use:
-=======
 > Alternatively, you can start the server using:
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 ```bash
 cd server
 npm start
 ```
 
-<<<<<<< HEAD
-### Terminal 2 - Start the frontend
-=======
----
-
 ## 2️⃣ Start the Frontend Application
 
 Open a **new terminal** and navigate to the `client` directory.
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 ```bash
 cd client
 npm run dev
 ```
-
-<<<<<<< HEAD
-The default local URLs are usually:
-
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3000`
-=======
----
 
 ## 🌐 Local Development URLs
 
@@ -710,7 +476,6 @@ After both servers are running successfully, you can access the application usin
 | ⚙️ Backend API | http://localhost:3000 |
 | 🔗 API Base URL | http://localhost:3000/api |
 
----
 
 ## ✅ Verify the Setup
 
@@ -722,7 +487,6 @@ If everything is configured correctly:
 - ✅ API requests from the frontend are working successfully
 
 > **Note:** Ensure that both the frontend and backend are running simultaneously before using the application.
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 
 ## Build Process
 
@@ -740,7 +504,6 @@ cd server
 npm run build
 ```
 
-<<<<<<< HEAD
 ## Linting
 
 ### Client
@@ -750,8 +513,6 @@ cd client
 npm run lint
 ```
 
-=======
->>>>>>> a7589737dcac281bdcf42fcd381624a20d1ed7a7
 ## Database and Seed Process
 
 If you need to prepare sample data, run the seed script from the server folder.
