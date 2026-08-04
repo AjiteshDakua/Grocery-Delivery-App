@@ -12,7 +12,7 @@ import {
   UserIcon,
   XIcon,
 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Address } from "../types";
 import { MapPinIcon, PlusIcon } from "lucide-react";
 import Loading from "../components/Loading";
